@@ -1,0 +1,22 @@
+{
+  "name": "puppeteer",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "package:win": "powershell -Command \"if (Test-Path dist) { Remove-Item -Recurse -Force dist }; New-Item -ItemType Directory -Force -Path dist; Copy-Item index.js dist/; Copy-Item package.json dist/; Set-Location dist; npm install --omit=dev; Compress-Archive -Path * -DestinationPath ../function.zip -Force; Set-Location ..\"",
+    "package": "rm -rf dist && mkdir dist && cp index.js dist/ && cp package.json dist/ && cd dist && npm install --production && zip -r ../function.zip .",
+    "create-layer": "mkdir -p layer/nodejs && cd layer/nodejs && npm init -y && npm install @sparticuz/chromium puppeteer-core && cd .. && zip -r ../chromium-layer.zip nodejs"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "puppeteer": "^21.5.0",
+    "@aws-sdk/client-s3": "^3.0.0"
+  },
+  "engines": {
+    "node": ">=22.0.0"
+  }
+}
