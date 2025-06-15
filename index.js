@@ -79,11 +79,10 @@ exports.handler = async (event, context) => {
 
     // Generate unique filename
     const timestamp = new Date().toISOString().replace(/[:.]/g, "-");
-    const pdfName = `certificates/${fileName || timestamp}.pdf`;
+    const pdfName = `${fileName || timestamp}.pdf`;
 
     // Upload to S3
-    const bucketName =
-      process.env.S3_BUCKET_NAME || "warranty-management-uploads";
+    const bucketName = process.env.S3_BUCKET_NAME;
     console.log("Uploading PDF to S3 bucket:", bucketName);
 
     const uploadParams = {
