@@ -22,7 +22,7 @@ exports.handler = async (event, context) => {
       requestBody = event.body || event;
     }
 
-    const { htmlTemplate, fileName } = requestBody;
+    const { htmlTemplate, fileName, bucketName } = requestBody;
 
     if (!htmlTemplate) {
       return {
@@ -82,11 +82,11 @@ exports.handler = async (event, context) => {
     const pdfName = `${fileName || timestamp}.pdf`;
 
     // Upload to S3
-    const bucketName = process.env.S3_BUCKET_NAME;
+    // const bucketName = process.env.S3_BUCKET_NAME;
     console.log("Uploading PDF to S3 bucket:", bucketName);
 
     const uploadParams = {
-      Bucket: bucketName,
+      Bucket: bucketName || process.env.S3_BUCKET_NAME,
       Key: pdfName,
       Body: pdf,
       ContentType: "application/pdf",
